@@ -77,7 +77,7 @@ export default function Home() {
             method="post"
             className={hidden === true ? "hidden" : "form"}
           >
-            <div>
+            <div className="contactContainer">
               <h3>
                 Kontaktujte mě na{" "}
                 <u>
@@ -174,8 +174,8 @@ export default function Home() {
       <style jsx>{`
         @media (min-width: 200px) {
           .container {
-            width: 85%;
-            padding: 0;
+            width: 90%;
+            padding: 10px;
           }
           .description {
             font-size: 1.5rem;
@@ -330,22 +330,24 @@ export default function Home() {
           transition: color 0.15s ease, border-color 0.15s ease;
         }
 
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
+        .send-button:hover,
+        .send-button:focus {
+          background: #0070f3;
+          transition: 0.4s;
         }
 
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
+        .send-button:active {
+          background: #6699ff;
         }
 
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
+        .reveal-button:hover,
+        .reveal-button:focus {
+          background: #0070f3;
+          transition: 0.4s;
+        }
+
+        .reveal-button:active {
+          background: #6699ff;
         }
 
         p {
@@ -359,9 +361,9 @@ export default function Home() {
 
         form {
           color: #7b3fa1;
-          width: 100%;
           max-width: 700px;
-          padding: 20px 30px;
+          padding: 15px 20px;
+
           background: #fcf2fc;
           box-sizing: border-box;
           border-radius: 20px;
@@ -430,6 +432,10 @@ export default function Home() {
           transition: width 300ms;
           text-decoration: none;
           width: 250px;
+        }
+
+        .contactContainer {
+          position: relative;
         }
 
         .logo {
