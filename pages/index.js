@@ -175,7 +175,6 @@ export default function Home() {
         @media (min-width: 200px) {
           .container {
             width: 90%;
-            padding: 10px;
           }
           .description {
             font-size: 1.5rem;
