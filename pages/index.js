@@ -385,6 +385,7 @@ export default function Home() {
 
         .column {
           margin-top: 10px;
+          margin-bottom: 1px;
 
           border: none;
           float: left;
@@ -413,7 +414,7 @@ export default function Home() {
           border: none;
           transition: width 300ms;
           text-decoration: none;
-          margin-top: 50px;
+          margin-top: 40px;
         }
 
         .reveal-button {
