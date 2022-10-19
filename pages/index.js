@@ -378,7 +378,7 @@ export default function Home() {
           width: 100%;
           border: none;
           height: 100px;
-          padding: 12px 15px;
+          padding: 12px 0px;
         }
 
         .column {
