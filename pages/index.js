@@ -382,7 +382,7 @@ export default function Home() {
 
         .column {
           margin-top: 10px;
-          margin-bottom: 2px;
+          margin-bottom: 3px;
 
           border: none;
           float: left;
