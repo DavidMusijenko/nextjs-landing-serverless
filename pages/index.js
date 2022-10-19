@@ -200,7 +200,7 @@ export default function Home() {
             width: 75%;
           }
           .formContainer {
-            margin-top: 150px;
+            margin-top: 70px;
           }
           .description {
             font-size: 2rem;
@@ -413,6 +413,7 @@ export default function Home() {
           border: none;
           transition: width 300ms;
           text-decoration: none;
+          margin-top: 50px;
         }
 
         .reveal-button {
