@@ -4,6 +4,7 @@ import Image from "next/image";
 import { SendEmail } from "../API";
 import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
+import { NodeNextRequest } from "next/dist/server/base-http/node";
 
 export default function Home() {
   const [hidden, setHidden] = useState(true);
@@ -51,92 +52,95 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1 className="title">David Musijenko</h1>
+        <div className="nameAuthor">
+          <h1 className="title">David Musijenko</h1>
 
-        <h2>webové stránky pro každého</h2>
+          <h2>webové stránky pro každého</h2>
+        </div>
+        <div className="formContainer">
+          <p className="description">
+            Chcete <strong>vlastní stránky</strong>? Ať už máte blog, podnikáte,
+            či chcete prodávat věci přes e-shop, najdeme pro vás to{" "}
+            <strong>ideální řešení</strong>.
+          </p>
 
-        <p className="description">
-          Chcete <strong>vlastní stránky</strong>? Ať už máte blog, podnikáte,
-          či chcete prodávat věci přes e-shop, najdeme pro vás to{" "}
-          <strong>ideální řešení</strong>.
-        </p>
+          <button
+            type="button"
+            className={hidden ? "reveal-button" : "hidden"}
+            onClick={handleClick}
+          >
+            <span>Jdem na to!</span>
+          </button>
 
-        <button
-          type="button"
-          className={hidden ? "reveal-button" : "hidden"}
-          onClick={handleClick}
-        >
-          <span>Jdem na to!</span>
-        </button>
+          <form
+            action=""
+            method="post"
+            className={hidden === true ? "hidden" : "form"}
+          >
+            <div>
+              <h3>
+                Kontaktujte mě na{" "}
+                <u>
+                  <a href="mailto:david.musijenko@gmail.com">
+                    david.musijenko@gmail.com
+                  </a>
+                </u>{" "}
+                nebo využijte tento formulář.
+              </h3>
 
-        <form
-          action=""
-          method="post"
-          className={hidden === true ? "hidden" : "form"}
-        >
-          <div>
-            <h3>
-              Kontaktujte mě na{" "}
-              <u>
-                <a href="mailto:david.musijenko@gmail.com">
-                  david.musijenko@gmail.com
-                </a>
-              </u>{" "}
-              nebo využijte tento formulář.
-            </h3>
-
-            <div className="fields">
-              <div className="row">
-                <div className="column">
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Vaše jméno"
-                    required=""
-                    onChange={(e) => setFullName(e.target.value)}
-                    onClick={() => console.log(email)}
-                  />
+              <div className="fields">
+                <div className="row">
+                  <div className="column">
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Vaše jméno"
+                      required=""
+                      onChange={(e) => setFullName(e.target.value)}
+                      onClick={() => console.log(email)}
+                    />
+                  </div>
+                  <div className="column">
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="E-mail"
+                      required=""
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="column">
+                    <input
+                      type="tel"
+                      name="phone"
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="Telefon"
+                    />
+                  </div>
                 </div>
-                <div className="column">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="E-mail"
-                    required=""
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                <div className="row">
+                  <textarea
+                    name="message"
+                    placeholder="Vaše zpráva"
+                    onChange={(e) => setMessage(e.target.value)}
+                  ></textarea>
                 </div>
-                <div className="column">
-                  <input
-                    type="tel"
-                    name="phone"
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Telefon"
-                  />
-                </div>
+                <button
+                  type="button"
+                  className="send-button"
+                  onClick={handleSent}
+                >
+                  <span>Odeslat zprávu</span>
+                </button>
               </div>
-              <div className="row">
-                <textarea
-                  name="message"
-                  placeholder="Vaše zpráva"
-                  onChange={(e) => setMessage(e.target.value)}
-                ></textarea>
-              </div>
-              <button
-                type="button"
-                className="send-button"
-                onClick={handleSent}
-              >
-                <span>Odeslat zprávu</span>
-              </button>
             </div>
-          </div>
-          <div className={hiddenSent === true ? "hidden" : "sent"}>
-            <h3>
-              <strong>Odesláno</strong>, <br /> brzy se vám ozvu zpět.
-            </h3>
-          </div>
-        </form>
+            <div className={hiddenSent === true ? "hidden" : "sent"}>
+              <h3>
+                <strong>Odesláno</strong>, <br /> brzy se vám ozvu zpět.
+              </h3>
+            </div>
+          </form>
+        </div>
       </main>
 
       <footer>
@@ -195,6 +199,9 @@ export default function Home() {
           .container {
             width: 75%;
           }
+          .formContainer {
+            margin-top: 150px;
+          }
           .description {
             font-size: 2rem;
           }
@@ -223,7 +230,7 @@ export default function Home() {
           padding: 0 0.5rem;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: space-between;
           align-items: center;
           padding: 0 20px;
           margin: 0 auto;
@@ -234,7 +241,6 @@ export default function Home() {
           flex: 1;
           display: flex;
           flex-direction: column;
-          justify-content: center;
         }
 
         footer {
@@ -411,7 +417,7 @@ export default function Home() {
 
         .reveal-button {
           font: inherit;
-          float: right;
+          float: left;
           overflow: visible;
           position: relative;
 
