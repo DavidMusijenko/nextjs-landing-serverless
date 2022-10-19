@@ -361,6 +361,7 @@ export default function Home() {
           color: #7b3fa1;
           width: 100%;
           max-width: 700px;
+          padding: 20px 30px;
           background: #fcf2fc;
           box-sizing: border-box;
           border-radius: 20px;
