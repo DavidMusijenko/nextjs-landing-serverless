@@ -359,11 +359,8 @@ export default function Home() {
 
         form {
           color: #7b3fa1;
-
           width: 100%;
           max-width: 700px;
-          margin: 20px 0 40px;
-          padding: 20px 30px;
           background: #fcf2fc;
           box-sizing: border-box;
           border-radius: 20px;
@@ -385,7 +382,7 @@ export default function Home() {
 
         .column {
           margin-top: 10px;
-          margin-bottom: 1px;
+          margin-bottom: 2px;
 
           border: none;
           float: left;
