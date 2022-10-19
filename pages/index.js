@@ -339,8 +339,7 @@ export default function Home() {
           background: #6699ff;
         }
 
-        .reveal-button:hover,
-        .reveal-button:focus {
+        .reveal-button:hover {
           background: #0070f3;
           transition: 0.4s;
         }
