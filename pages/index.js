@@ -5,6 +5,12 @@ import { SendEmail } from "../API";
 import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
 import { NodeNextRequest } from "next/dist/server/base-http/node";
+import {
+  validateEmail,
+  validateFullName,
+  validateMessage,
+  validatePhone,
+} from "../components/Validation";
 
 export default function Home() {
   const [hidden, setHidden] = useState(true);
@@ -14,6 +20,10 @@ export default function Home() {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [send, setSend] = useState();
+  const [fullNameError, setFullNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [messageError, setMessageError] = useState("");
 
   emailjs.init("QFtttwpShWNlnzmyU");
 
@@ -21,9 +31,28 @@ export default function Home() {
     setHidden(false);
   };
 
+  //validate email, phone, message, fullname
+
+  const validateAll = () => {
+    validateMessage({ message, setMessageError });
+    validateEmail({ email, setEmailError });
+    validatePhone({ phone, setPhoneError });
+    validateFullName({ fullName, setFullNameError });
+  };
+
   const handleSent = () => {
-    if (fullName && email && message) {
-      // TODO - send mail
+    validateAll();
+
+    if (
+      fullName !== "" &&
+      email !== "" &&
+      message !== "" &&
+      phoneError === "" &&
+      emailError === "" &&
+      fullNameError === "" &&
+      messageError === ""
+    ) {
+      //  send mail
       const serviceId = "service_9axcgil";
       const templateId = "template_l2i42xu";
       const userId = "user_id";
@@ -31,6 +60,7 @@ export default function Home() {
         fullName,
         email,
         message,
+        phone,
       };
 
       emailjs
@@ -40,7 +70,9 @@ export default function Home() {
 
       setHiddenSent(false);
     } else {
-      alert("Please fill in all fields.");
+      alert(
+        `Please fill in all fields properly.${fullNameError} ${emailError} ${phoneError} ${messageError}`
+      );
     }
   };
 
@@ -97,7 +129,6 @@ export default function Home() {
                       placeholder="Vaše jméno"
                       required=""
                       onChange={(e) => setFullName(e.target.value)}
-                      onClick={() => console.log(email)}
                     />
                   </div>
                   <div className="column">
@@ -121,7 +152,7 @@ export default function Home() {
                 <div className="row">
                   <textarea
                     name="message"
-                    placeholder="Vaše zpráva"
+                    placeholder=" Vaše zpráva"
                     onChange={(e) => setMessage(e.target.value)}
                   ></textarea>
                 </div>
