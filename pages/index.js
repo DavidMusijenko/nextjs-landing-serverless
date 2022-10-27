@@ -4,6 +4,7 @@ import Image from "next/image";
 import { SendEmail } from "../API";
 import emailjs from "emailjs-com";
 import { init } from "emailjs-com";
+import { Transition } from "react-transition-group";
 import { NodeNextRequest } from "next/dist/server/base-http/node";
 import {
   validateEmail,
@@ -27,10 +28,6 @@ export default function Home() {
 
   emailjs.init("QFtttwpShWNlnzmyU");
 
-  const handleClick = () => {
-    setHidden(false);
-  };
-
   //validate email, phone, message, fullname
 
   const validateAll = () => {
@@ -42,38 +39,40 @@ export default function Home() {
 
   const handleSent = () => {
     validateAll();
+    if (fullName !== "" && email !== "" && message !== "" && phone !== "") {
+      if (
+        emailError === "" &&
+        fullNameError === "" &&
+        messageError === "" &&
+        phoneError === ""
+      ) {
+        //  send mail
+        const serviceId = "service_9axcgil";
+        const templateId = "template_l2i42xu";
+        const userId = "user_id";
+        const templateParams = {
+          fullName,
+          email,
+          message,
+          phone,
+        };
 
-    if (
-      fullName !== "" &&
-      email !== "" &&
-      message !== "" &&
-      phoneError === "" &&
-      emailError === "" &&
-      fullNameError === "" &&
-      messageError === ""
-    ) {
-      //  send mail
-      const serviceId = "service_9axcgil";
-      const templateId = "template_l2i42xu";
-      const userId = "user_id";
-      const templateParams = {
-        fullName,
-        email,
-        message,
-        phone,
-      };
+        emailjs
+          .send(serviceId, templateId, templateParams)
+          .then((response) => console.log(response))
+          .then((error) => console.log(error));
 
-      emailjs
-        .send(serviceId, templateId, templateParams)
-        .then((response) => console.log(response))
-        .then((error) => console.log(error));
-
-      setHiddenSent(false);
+        setHiddenSent(false);
+      }
     } else {
       alert(
         `Please fill in all fields properly.${fullNameError} ${emailError} ${phoneError} ${messageError}`
       );
     }
+  };
+
+  const handleClick = () => {
+    setHidden(false);
   };
 
   return (
@@ -107,7 +106,7 @@ export default function Home() {
           <form
             action=""
             method="post"
-            className={hidden === true ? "hidden" : "form"}
+            className={hidden === true ? "hidden" : "form .form-change"}
           >
             <div className="contactContainer">
               <h3>
@@ -280,6 +279,9 @@ export default function Home() {
           display: flex;
           justify-content: center;
           align-items: center;
+          opacity: 0;
+          animation: fade 1.5s 1200ms;
+          animation-fill-mode: forwards;
         }
 
         footer img {
@@ -305,6 +307,9 @@ export default function Home() {
           margin-left: 2px;
           margin-bottom: 2rem;
           font-weight: 300;
+          opacity: 0;
+          animation: fade 1.5s 200ms;
+          animation-fill-mode: forwards;
         }
 
         .title a {
@@ -323,10 +328,16 @@ export default function Home() {
           line-height: 1.15;
           font-size: 2.3rem;
           letter-spacing: -0.1rem;
+          opacity: 0;
+          animation: fade 1.5s 200ms;
+          animation-fill-mode: forwards;
         }
 
         .description {
           line-height: 1.5;
+          opacity: 0;
+          animation: fade 1.5s 800ms;
+          animation-fill-mode: forwards;
         }
 
         code {
@@ -388,7 +399,26 @@ export default function Home() {
           text-align: justify;
         }
 
+        @-webkit-keyframes fade {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes fade {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
         form {
+          opacity: 0;
           color: #7b3fa1;
           max-width: 700px;
           padding: 15px 20px;
@@ -396,6 +426,13 @@ export default function Home() {
           background: #fcf2fc;
           box-sizing: border-box;
           border-radius: 20px;
+          animation-delay: 250ms;
+          animation: fade 1.5s 200ms;
+          animation-fill-mode: forwards;
+        }
+
+        .form-change {
+          opacity: 1;
         }
 
         .hidden {
@@ -436,7 +473,7 @@ export default function Home() {
 
           color: #fff;
           float: right;
-          margin: 25px 0 20px;
+
           padding: 15px 30px;
           font-size: 1.4rem;
           background: #2ecc71;
@@ -447,6 +484,7 @@ export default function Home() {
         }
 
         .reveal-button {
+          opacity: 0;
           font: inherit;
           float: left;
           overflow: visible;
@@ -461,6 +499,8 @@ export default function Home() {
           transition: width 300ms;
           text-decoration: none;
           width: 250px;
+          animation: fade 1.5s 2500ms;
+          animation-fill-mode: forwards;
         }
 
         .contactContainer {
